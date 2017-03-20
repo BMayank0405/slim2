@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    var obj;
+    $(document).ready(function() {
+      $('textarea').blur(function () {
+      var csv = $('textarea').val();
+      csv = csv.split(',');
+      obj = JSON.stringify(csv);
+      });
+
+    $("#send").click(function (e) {
+      e.preventDefault();
+      console.log('reached here!');
+        $.ajax({
+        url: "http://localhost/new_try/public/place-order",
+        //dataType: "json",
+        //crossDomain :true,
+        contentType: "application/json",
+        type: 'POST',
+        data:obj,
+        success:function (response)
+        {
+          var response = JSON.parse(response);
+          alert(response);
+          console.log(response);
+        }
+        });
+    });
+  });
+</script>
+</head>
+<body>
+    <input type="text" placeholder="enter your name" />
+  <input type="text" placeholder="enter your address" />
+  <input type="text" placeholder="enter your name" />
+  <input type="text" placeholder="enter your name" />
+    <input type="button" value="click"  id="send"/>
+</body>
+</html>
