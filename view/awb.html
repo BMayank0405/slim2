@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $("#send").click(function (e) {
+          var append = $("#awb").val();
+          var url="http://localhost/new_try/public/awb/"+append;
+          $.get(url);
+          window.location.href = url ;
+      });
+  });
+</script>
+</head>
+<body>
+    <input type="text" placeholder="enter your awb number" pattern="^\w+$" id ="awb"/>
+    <input type="button" value="click"  id="send"/>
+</body>
+</html>
