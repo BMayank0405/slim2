@@ -3,6 +3,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 header('Content-Type: application/json');
 require_once __DIR__ . '/../config/config.php';
+require_once __DIR__.'/../src/functions.php';
 
 //route for getting detail of a single awb number
 $app->get('/awb/{awb}',function(Request $request,Response $response,$args){
@@ -71,35 +72,46 @@ $app->post('/place-order', function ($request, $response, $args) {
 
 $app->post('/test', function($request,$response,$args){
   global $db;
-  $first = $request->getParam('1');
+  $client = $request->getParam("client_order_id");
+  $awb_no = $request->getParam('awb_number');
+  $pincode= $request->getParam('pincode');
+  $customer_name = $request->getParam('customer_name');
+  $customer_phone = $request->getParam('customer_phone');
+  $customer_address = $request->getParam('customer_address');
+  $c_city = $request->getParam('c_city');
+  $c_state = $request->getParam('c_state');
+  $declared_value = $request->getParam('declared_value');
+  $cod_amount = $request->getParam('cod_amount');
+  $deliver_type = $request->getParam('deliver_type');
+
+  //here onwards json object start so we use some functions to make them store in mariadb
+  $pickup_address = pickup($request->getParam('pickup_address_attributes'));
+  $rto_address =json_object($request->getParam('rto_attributes'));
+  $rts_address =json_object($request->getParam('rts_attributes'));
+  $not_delivered = $request->getParam('return_type_if_not_delivered');
+  $skus = input_data($request->getParam('skus_attributes'));
 
 
-
-  $skus = $request->getParam('skus');
-  $second = $request->getParam('2');
-
-  $i=0;
-  $make_query ='';
-  foreach ($skus as $array){
-    $sku_id = $array['sku_id'];
-    $price= $array["price"];
-    $id = $array["id"];
-    $product = $array["product"];
-    $make_query =$make_query."'$i',COLUMN_CREATE('sku_id','$sku_id','price','$price','id','$id','product','$product')".',';
-    $i++;
-    };
-
-  $make_query = rtrim($make_query,',');
-  echo "\r\n";
-
-  $query ="INSERT INTO test
+  $query ="INSERT INTO items
     VALUES (NULL,
-    '$first',
-    COLUMN_CREATE($make_query),
-    '$second')";
-  echo $query;
+    '$client','$awb_no',$pincode,'$customer_name','$customer_phone','$customer_address','$c_city','$c_state',
+    $declared_value,$cod_amount,'$deliver_type',$pickup_address,$rto_address,$rts_address,'$not_delivered',
+    COLUMN_CREATE($skus));";
+
   $result = $db->query($query);
   var_dump ($result);
 
   });
+
+$app->post('/new-test', function($request,$response,$args){
+  $client = $request->getParam("client_order_id");
+  echo $client."\r\n";
+  $awb_no = $request->getParam('awb_number');
+  echo $awb_no;
+});
+
+
+
+
+
 ?>
