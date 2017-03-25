@@ -3,13 +3,7 @@
 <head>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
-    var obj;
     $(document).ready(function() {
-      $('textarea').blur(function () {
-      var csv = $('textarea').val();
-      csv = csv.split(',');
-      obj = JSON.stringify(csv);
-      });
 
     $("#send").click(function (e) {
       e.preventDefault();
@@ -33,10 +27,24 @@
 </script>
 </head>
 <body>
-    <input type="text" placeholder="enter your name" />
-  <input type="text" placeholder="enter your address" />
-  <input type="text" placeholder="enter your name" />
-  <input type="text" placeholder="enter your name" />
+    <input type="text" required placeholder="client_order_id" />
+  <input type="text" required placeholder="awb_number" />
+  <input type="text" required placeholder="pincode" />
+  <input type="text" required placeholder="customer_name" />
+  <input type="text" required placeholder="customer_phone" />
+  <input type="text" required placeholder="customer_address" />
+  <input type="text" required placeholder="c_city" />
+  <input type="text" required placeholder="c_state" />
+  <input type="text" required placeholder="declared_value" />
+  <input type="text" required placeholder="cod_amount" />
+  <input type="text" required placeholder="deliver_type" />
+  <input type="text" required placeholder="pickup_address_attributes" />
+  <input type="text" required placeholder="return_type_if_not_delivered" />
+  <input type="text" required placeholder="rto_attributes" />
+  <input type="text" required placeholder="rto_attributes" />
+  <input type="text" required placeholder="pickup_address_attributes ​" />
+  <input type="text" required placeholder="skus_attributes" />
+
     <input type="button" value="click"  id="send"/>
 </body>
 </html>

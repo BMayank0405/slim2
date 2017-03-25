@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
   var obj;
   $(document).ready(function() {
@@ -17,16 +17,17 @@
     console.log('reached here!');
       $.ajax({
       url: "http://localhost/new_try/public/order",
-      //dataType: "json",
       //crossDomain :true,
       contentType: "application/json",
       type: 'POST',
       data:obj,
-      success:function (response)
+      success:function(response)
       {
-        var response = JSON.parse(response);
-        alert(response);
+        $('textarea').remove();
+        $('#send').remove();
         console.log(response);
+        $("#result").html(response);
+        console.log('i am here');
       }
       });
   });
@@ -36,5 +37,6 @@
 <body>
     <textarea name="string" id="myfield" > </textarea>
     <input type="button" value="click"  id="send"/>
+    <pre id="result"></pre>
 </body>
 </html>
