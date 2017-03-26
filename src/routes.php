@@ -54,54 +54,12 @@ require_once __DIR__ . '/SearchForAWB.php';
 require_once __DIR__ . '/SearchForMultipleAWB.php';
 
 
-$app->post('/nhjhjhjhjorder', function ($request, $response, $args) {
-  global $db;
-  $data = $request->getParsedBody();//parsedBody is an array of objects
-  $query = "SELECT * FROM cutomers";
-  $result = $db->query($query);
-  if($result){
-    while($row = $result->fetch_assoc()){
-      $response->withAddedHeader('Content-Type', 'application/json');
-       $response->write(json_encode($row,JSON_PRETTY_PRINT));
-       $response->write("\r\n");
-       }
-       return $response;
-  }
-  /*$length = count($data);
-  echo $length;
-  for ($i=0;$i<$length;$i++){
-    echo "1 \r\n";
-  }*/
-   /*$query = "SELECT * FROM cutomers WHERE `id`=1";
-    $result = $db->query($query);
-    if($result){
-      while($row = $result->fetch_row()){
-        echo json_encode($row);
-        echo '<br />';
-      }
-    }
-    else {
-      echo '{"message": "Invalid AWB Number"}';
-    }
-  });
-*/
-});
-
 
 //route for cancelling the order
 //$app->put('/cancel-order',function($request,$response){
 //  $data =  $request->getParsedBody();
 //});
 
-$app->post('/pl', function ($request, $response, $args) {
-  $data = $request->getParam('client'); //parsedBody is an array of objects
-if (empty($client)){
-  echo 'success';
-}
-else{
-  echo 'fail';
-}
-});
 
 
 // for inserting new order in the database
