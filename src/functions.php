@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 function input_data($skus){
   $i=0;
   $skus_query='';
@@ -31,6 +34,7 @@ function json_object($array){
   return $json_query;
 };
 
+
 function pickup($array){
   $address = $array['address'];
   $pincode = $array['pincode'];
@@ -45,8 +49,8 @@ function pickup($array){
 
 function maybe_json_encode($row){
 
-  $find = array("{",",","}");
-  $replace = array("{\r\n",",\r\n","\r\n}");//this array appends new line after {
+  $find = array("{" , "," , "}");
+  $replace = array("{\r\n    " , ",\r\n    " , "\r\n  }");//this array appends new line after {
   $row['pickup'] = str_replace($find,$replace,$row['pickup']);
   $row['rto'] = str_replace($find,$replace,$row['rto']);//making json pretty
   $row['rts'] = str_replace($find,$replace,$row['rts']);
@@ -68,16 +72,16 @@ function maybe_json_encode($row){
   foreach($row as $key => $value)
   { //here in these values we don't need to put quotes on values
     if($key =='id' || $key=='pincode' || $key=='declared_value' || $key=='cod_amount'|| $key=='pickup'|| $key=='rto'|| $key=='rts'){
-      echo "\"$key\":"."$value".','."\r\n";
+      echo '  '."\"$key\":"."$value".','."\r\n";
     }
     elseif($key=='skus'){ //skus is returned as an array of json object
-      echo "\"$key\":".'['."$value".']'."\r\n";
+      echo '  '."\"$key\":".'['."$value".']'."\r\n";
     }
     else{ //here we need to put quotes on values
-      echo "\"$key\":"."\"$value\"".','."\r\n";
+      echo '  '."\"$key\":"."\"$value\"".','."\r\n";
     }
   }
-  echo '}'."\r\n";
+  echo ' }'."\r\n";
 
 };
 

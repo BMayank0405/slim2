@@ -1,6 +1,6 @@
 <?php
 
-$app->post('/placeOrder', function($request,$response,$args){
+  $app->post('/placeOrder', function($request,$response,$args){
   global $db;
   $client = $request->getParam("client_order_id");
   $awb_no = $request->getParam('awb_number');
@@ -84,8 +84,8 @@ try {
 
   if(empty($errors)){
       $pickup_address = pickup($pickup_address);
-      $rto_attribute = json_object($rto_attribute);
-      $rts_attribute = json_object($rts_attribute);
+      $rto_attributes = json_object($rto_attributes);
+      $rts_attributes = json_object($rts_attributes);
 
       $query ="INSERT INTO items
         VALUES (NULL,
@@ -94,7 +94,6 @@ try {
         COLUMN_CREATE($skus));";
 
       $result = $db->query($query);
-      var_dump($result);
       try{
         if($result){
               $r_query = "SELECT id,client_order_id,  awb_number,	pincode,	customer_name,
@@ -105,17 +104,16 @@ try {
                         column_json(rts_attributes) as rts,
                         return_type_if_not_delivered,
                         column_json(skus_attributes) as skus
-                         FROM `items` ";
+                         FROM `items` WHERE `awb_number`=\"$awb_no\"";
             $r_result = $db->query($r_query);
             if($r_result){
             while($r_row = $r_result->fetch_assoc()){
               echo '{'."\r\n";
               echo '"message":"Success",'."\r\n";
-              echo '"Client reqiest:"{'."\r\n";
+              echo '"Client request:"{'."\r\n";
               maybe_json_encode($r_row);
               echo '}';
               echo "\r\n";
-
             }
           }
           else {
@@ -123,7 +121,7 @@ try {
           }
         }
       else{
-        throw new Exception('there might some problem with your entries')
+        throw new InvalidArgumentException('there might some problem with your entries');
       }
     }
     catch (Exception $ex){

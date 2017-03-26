@@ -48,10 +48,13 @@ $app->get('/testtoken', function ($request, $response, $args) {
 
 
 //route for getting detail of a single awb number
-
+require_once __DIR__ . '/SearchForAWB.php';
 
 //route for getting details of multiple awb numbers
-$app->post('/order', function ($request, $response, $args) {
+require_once __DIR__ . '/SearchForMultipleAWB.php';
+
+
+$app->post('/nhjhjhjhjorder', function ($request, $response, $args) {
   global $db;
   $data = $request->getParsedBody();//parsedBody is an array of objects
   $query = "SELECT * FROM cutomers";
