@@ -1,6 +1,12 @@
 <?php
 
+require_once __DIR__.'/../src/authenticationUtils.php';
+
   $app->post('/placeOrder', function($request,$response,$args){
+  if(token_validation($request) == "Fail")
+  {
+    return $response->withStatus(401);
+  }
   global $db;
   $client = $request->getParam("client_order_id");
   $awb_no = $request->getParam('awb_number');
